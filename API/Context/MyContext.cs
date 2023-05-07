@@ -46,24 +46,24 @@ public class MyContext : DbContext
 
         // One Account has one Employee
         modelBuilder.Entity<Employee>()
-                    .HasOne(e => e.Account)
-                    .WithOne(a => a.Employee)
-                    .HasForeignKey<Account>(p => p.EmployeeNIK)
+                    .HasOne(em => em.Account)
+                    .WithOne(ac => ac.Employee)
+                    .HasForeignKey<Account>(ac => ac.EmployeeNIK)
                     .OnDelete(DeleteBehavior.Restrict);
 
         // One Account has many AccountRole
         modelBuilder.Entity<Account>()
-                    .HasMany(a => a.AccountRole)
+                    .HasMany(r => r.AccountRole)
                     .WithOne(ar => ar.Account)
-                    .HasForeignKey(ar => ar.Account_nik)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .IsRequired(false)
+                    .HasForeignKey(ar => ar.Account_nik);
 
         // One Role has many AccountRole
         modelBuilder.Entity<Role>()
                     .HasMany(r => r.AccountRole)
                     .WithOne(ar => ar.Role)
-                    .HasForeignKey(ar => ar.Role_id)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .IsRequired(false)
+                    .HasForeignKey(ar => ar.Role_id);
 
     }
 }
